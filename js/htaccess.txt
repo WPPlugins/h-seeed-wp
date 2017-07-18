@@ -1,0 +1,16 @@
+#このファイルの名前を.htaccessに変えることでH Speed WPのJSの読み込みが圧縮・キャッシュされるようになります。この機能は一部のサーバーでは対応していません。
+<ifModule mod_expires.c>
+ExpiresActive On
+ExpiresByType text/javascript "access plus 2 weeks"
+</ifModule>
+
+RewriteEngine on
+RewriteCond %{HTTP:Accept-Encoding} gzip
+RewriteCond %{REQUEST_FILENAME}\.gz -s
+RewriteRule .+ %{REQUEST_URI}.gz
+
+#Javascript
+<FilesMatch "\.js\.gz$">
+	ForceType application/x-javascript
+	AddEncoding x-gzip .gz
+</FilesMatch>
